@@ -2,7 +2,7 @@
 Summary: A utility for graphically configuring Logical Volumes
 Name: system-config-lvm
 Version: 1.1.12
-Release: 12%{?dist}
+Release: 15%{?dist}
 URL: http://git.fedorahosted.org/git/?p=system-config-lvm.git 
 Source0: %{name}-%{version}.tar.gz
 License: GPLv2
@@ -31,6 +31,12 @@ Patch9: scl-logical_volumes_displayed_under_uninitialized.patch
 Patch10: scl-get_partitions_valueerror.patch
 Patch11: scl-logical_volumes_displayed_under_uninitialized-2.patch
 Patch12: scl-traceback-parsing-dm.patch
+Patch13: scl-extent.patch
+Patch14: scl-1-many_lv.patch
+Patch16: scl-raid1.patch
+Patch17: scl-3-many_lv.patch
+Patch18: scl-4-many_lv.patch
+Patch19: scl-raid1-errormsg.patch
 
 %description
 system-config-lvm is a utility for graphically configuring Logical Volumes
@@ -50,6 +56,12 @@ system-config-lvm is a utility for graphically configuring Logical Volumes
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
+%patch13 -p1
+%patch14 -p1
+%patch16 -p1
+%patch17 -p1
+%patch18 -p1
+%patch19 -p1
 
 %build
 %configure
@@ -89,6 +101,24 @@ rm -rf %{buildroot}
 %config(noreplace) %{_sysconfdir}/security/console.apps/system-config-lvm
 
 %changelog
+* Thu Dec 13 2012 Marek Grac <mgrac@redhat.com> - 1.1.12-15
+- s-c-lvm improve error message when using mirrored LVM
+  Resolves: rhbz#820539
+
+* Mon Dec 10 2012 Marek Grac <mgrac@redhat.com> - 1.1.12-14
+- s-c-lv crash after startup on machine with many LV
+  Resolves: rhbz#840070
+- s-c-lvm crash when encounter RAID1 created in LVM
+  Resolves: rhbz#852864
+
+* Thu Sep 27 2012 Marek Grac <mgrac@redhat.com> - 1.1.12-13
+- s-c-lvm crash after startup on machine with many LV
+- Resolves: rhbz#840070
+- s-c-lvm crash when encounter RAID 1 created in LVM
+- Resolves: rhbz#852864
+- s-c-lvm crash on mirrored LV with mirrorlog
+- Resolves: rhbz#852864
+
 * Wed May 02 2012 Marek Grac <mgrac@redhat.com> - 1.1.12-12
 - Displays Logical Volumes without filesystem under 'Unitialized'
 - Resolves: rhbz#791153
