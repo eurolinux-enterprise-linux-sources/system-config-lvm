@@ -2,7 +2,7 @@
 Summary: A utility for graphically configuring Logical Volumes
 Name: system-config-lvm
 Version: 1.1.12
-Release: 15%{?dist}
+Release: 16%{?dist}
 URL: http://git.fedorahosted.org/git/?p=system-config-lvm.git 
 Source0: %{name}-%{version}.tar.gz
 License: GPLv2
@@ -37,6 +37,7 @@ Patch16: scl-raid1.patch
 Patch17: scl-3-many_lv.patch
 Patch18: scl-4-many_lv.patch
 Patch19: scl-raid1-errormsg.patch
+Patch20: scl-crash_with_striped_segments.patch
 
 %description
 system-config-lvm is a utility for graphically configuring Logical Volumes
@@ -62,6 +63,7 @@ system-config-lvm is a utility for graphically configuring Logical Volumes
 %patch17 -p1
 %patch18 -p1
 %patch19 -p1
+%patch20 -p1
 
 %build
 %configure
@@ -101,6 +103,10 @@ rm -rf %{buildroot}
 %config(noreplace) %{_sysconfdir}/security/console.apps/system-config-lvm
 
 %changelog
+* Mon Jul 01 2013 Marek Grac <mgrac@redhat.com> - 1.1.12-16
+- s-c-lvm crashes with striped segments in a mirror
+  Resolves: rhbz#923643
+
 * Thu Dec 13 2012 Marek Grac <mgrac@redhat.com> - 1.1.12-15
 - s-c-lvm improve error message when using mirrored LVM
   Resolves: rhbz#820539
