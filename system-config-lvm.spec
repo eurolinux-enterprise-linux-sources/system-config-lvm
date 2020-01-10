@@ -2,7 +2,7 @@
 Summary: A utility for graphically configuring Logical Volumes
 Name: system-config-lvm
 Version: 1.1.12
-Release: 16%{?dist}
+Release: 17%{?dist}
 URL: http://git.fedorahosted.org/git/?p=system-config-lvm.git 
 Source0: %{name}-%{version}.tar.gz
 License: GPLv2
@@ -38,6 +38,9 @@ Patch17: scl-3-many_lv.patch
 Patch18: scl-4-many_lv.patch
 Patch19: scl-raid1-errormsg.patch
 Patch20: scl-crash_with_striped_segments.patch
+Patch21: scl-thin_pool_crash.patch
+Patch22: scl-online_extension_ext3.patch
+Patch23: scl-gui_cannot_be_opened.patch 
 
 %description
 system-config-lvm is a utility for graphically configuring Logical Volumes
@@ -64,6 +67,9 @@ system-config-lvm is a utility for graphically configuring Logical Volumes
 %patch18 -p1
 %patch19 -p1
 %patch20 -p1
+%patch21 -p1
+%patch22 -p1
+%patch23 -p1
 
 %build
 %configure
@@ -103,6 +109,14 @@ rm -rf %{buildroot}
 %config(noreplace) %{_sysconfdir}/security/console.apps/system-config-lvm
 
 %changelog
+* Fri Mar 14 2014 Marek Grac <mgrac@redhat.com> - 1.1.12-17
+- s-c-lvm crases with thin volumes
+  Resolves: rhbz#878253
+- s-c-lvm GUI can not be opened from some OS
+  Resolves: rhbz#953071
+- s-c-lvm does not allow online extend of ext3 fs
+  Resolves: rhbz#1029755
+
 * Mon Jul 01 2013 Marek Grac <mgrac@redhat.com> - 1.1.12-16
 - s-c-lvm crashes with striped segments in a mirror
   Resolves: rhbz#923643
