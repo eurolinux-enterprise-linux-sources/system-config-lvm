@@ -1,0 +1,36 @@
+diff --git a/src/system-config-lvm.py b/src/system-config-lvm.py
+index cb0d3d6..7ab0d2e 100755
+--- a/src/system-config-lvm.py
++++ b/src/system-config-lvm.py
+@@ -13,6 +13,7 @@ import select
+ import signal
+ import string
+ import os
++import socket
+ 
+ PROGNAME = "system-config-lvm"
+ INSTALLDIR="/usr/share/system-config-lvm"
+@@ -158,12 +159,22 @@ def runFullGUI():
+     app.show()
+     app.connect("destroy", lambda w: gtk.main_quit())
+     gtk.main()
++
++def get_lock(process_name):
++    global lock_socket
++    lock_socket = socket.socket(socket.AF_UNIX, socket.SOCK_DGRAM)
++    try:
++        lock_socket.bind('\0' + process_name)
++    except socket.error:
++        print "%s is already running" % (process_name)
++        sys.exit()
+                                                                                 
+                                                                                 
+ if __name__ == "__main__":
+     cmdline = sys.argv[1:]
+     sys.argv = sys.argv[:1]
+-                                                                                
++
++    get_lock('system-config-lvm')
+ 
+     if os.getuid() != 0:
+         print _("Please restart %s with root permissions!") % (sys.argv[0])

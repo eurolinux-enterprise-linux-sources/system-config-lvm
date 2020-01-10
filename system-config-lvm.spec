@@ -2,7 +2,7 @@
 Summary: A utility for graphically configuring Logical Volumes
 Name: system-config-lvm
 Version: 1.1.12
-Release: 17%{?dist}
+Release: 17%{?dist}.1
 URL: http://git.fedorahosted.org/git/?p=system-config-lvm.git 
 Source0: %{name}-%{version}.tar.gz
 License: GPLv2
@@ -41,6 +41,7 @@ Patch20: scl-crash_with_striped_segments.patch
 Patch21: scl-thin_pool_crash.patch
 Patch22: scl-online_extension_ext3.patch
 Patch23: scl-gui_cannot_be_opened.patch 
+Patch24: scl-singleton.patch
 
 %description
 system-config-lvm is a utility for graphically configuring Logical Volumes
@@ -70,6 +71,7 @@ system-config-lvm is a utility for graphically configuring Logical Volumes
 %patch21 -p1
 %patch22 -p1
 %patch23 -p1
+%patch24 -p1
 
 %build
 %configure
@@ -109,6 +111,10 @@ rm -rf %{buildroot}
 %config(noreplace) %{_sysconfdir}/security/console.apps/system-config-lvm
 
 %changelog
+* Fri Sep 18 2015 Marek Grac <mgrac@redhat.com> - 1.1.12-17.1
+- s-c-lvm should run only in single instance
+  Resolves: rhbz#1264357
+
 * Fri Mar 14 2014 Marek Grac <mgrac@redhat.com> - 1.1.12-17
 - s-c-lvm crases with thin volumes
   Resolves: rhbz#878253
